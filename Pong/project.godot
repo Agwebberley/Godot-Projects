@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="Godot-projects"
+run/main_scene="res://Levels/Level1.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/scale=3.0
+
 [rendering]
 
-renderer/rendering_method="forward_plus"
+textures/canvas_textures/default_texture_filter=0
