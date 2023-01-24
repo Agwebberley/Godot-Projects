@@ -1,14 +1,63 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhbd7qnyi30tj"]
+[gd_scene load_steps=7 format=3 uid="uid://cychg0a5kjnya"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o8bwr"]
+[ext_resource type="PackedScene" uid="uid://cnbp4kuh3kp5w" path="res://Prefabs/Paddle.tscn" id="1_akr2a"]
+[ext_resource type="Script" path="res://GameManager.gd" id="1_h7qnl"]
+[ext_resource type="PackedScene" uid="uid://b8i5y6cmc0l6p" path="res://Prefabs/Ball.tscn" id="3_e4dwt"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_duiir"]
+friction = 0.66
+bounce = 0.34
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t6pb1"]
+size = Vector2(1164, 20)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eo5nx"]
+friction = 0.66
+bounce = 0.34
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_h7qnl")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="LeftPaddle" parent="." instance=ExtResource("1_akr2a")]
+position = Vector2(50, 325)
+WASD = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(51, 300)
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(0, 656)
+physics_material_override = SubResource("PhysicsMaterial_duiir")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-scale = Vector2(0.56, 6.56)
-shape = SubResource("RectangleShape2D_o8bwr")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+position = Vector2(572, -1)
+shape = SubResource("RectangleShape2D_t6pb1")
+
+[node name="GoalLeft" type="StaticBody2D" parent="."]
+position = Vector2(0, 321)
+scale = Vector2(-0.0201973, 34.0982)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalLeft"]
+position = Vector2(572, 0)
+shape = SubResource("RectangleShape2D_t6pb1")
+
+[node name="GoalRight" type="StaticBody2D" parent="."]
+position = Vector2(1174, 321)
+scale = Vector2(-0.0201973, 34.0982)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalRight"]
+position = Vector2(572, 0)
+shape = SubResource("RectangleShape2D_t6pb1")
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(1, -10)
+physics_material_override = SubResource("PhysicsMaterial_eo5nx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2(572, 0)
+shape = SubResource("RectangleShape2D_t6pb1")
+
+[node name="RightPaddle" parent="." instance=ExtResource("1_akr2a")]
+position = Vector2(1098, 325)
+
+[node name="Ball" parent="." node_paths=PackedStringArray("GoalLeft", "GoalRight") instance=ExtResource("3_e4dwt")]
+position = Vector2(550, 325)
+GoalLeft = NodePath("../GoalLeft")
+GoalRight = NodePath("../GoalRight")
